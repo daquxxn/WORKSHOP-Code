@@ -6,6 +6,8 @@ using UnityEngine.UI;
 public class ClickAndReact : MonoBehaviour
 {
     [SerializeField] private Slider _moodSlider;
+    [SerializeField] private float _tvMoodUp = 0.1f;
+    [SerializeField] private float _stereoMoodUp = 0.1f;
 
     // Start is called before the first frame update
     void Start()
@@ -17,17 +19,25 @@ public class ClickAndReact : MonoBehaviour
     void Update()
     {
         if(Input.GetMouseButtonDown(0))
-        {
-            RaycastHit hit;
+        { 
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            RaycastHit hit;
 
-            if(Physics.Raycast(ray, out hit, 100.0f))
+            if(Physics.Raycast(ray, out hit))
+
+            #region TV
             {
-                if(hit.transform != null)
-                {
-                    _moodSlider.value += 0.1f;
-                }
+                if (hit.transform.tag == "TV")
+                    _moodSlider.value += _tvMoodUp;
             }
+            #endregion
+
+            #region STEREO
+            {
+                if (hit.transform.tag == "Stereo")
+                    _moodSlider.value += _stereoMoodUp;
+            }
+            #endregion
         }
     }
 }
