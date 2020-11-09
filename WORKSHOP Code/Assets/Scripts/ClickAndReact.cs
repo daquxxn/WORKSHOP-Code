@@ -9,6 +9,9 @@ public class ClickAndReact : MonoBehaviour
     [SerializeField] private float _tvMoodUp = 0.1f;
     [SerializeField] private float _stereoMoodUp = 0.1f;
 
+    [SerializeField] private List <CooldownMoodTasks> _cdMoodTasks = null;
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -18,26 +21,34 @@ public class ClickAndReact : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetMouseButtonDown(0))
-        { 
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hit;
-
-            if(Physics.Raycast(ray, out hit))
-
-            #region TV
+        for (int i = 0; i < _cdMoodTasks.Count; i++)
+        {
+            if (Input.GetMouseButtonDown(0) && _cdMoodTasks[i].CurCooldown >= 100)
             {
-                if (hit.transform.tag == "TV")
-                    _moodSlider.value += _tvMoodUp;
-            }
-            #endregion
+                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+                RaycastHit hit;
 
-            #region STEREO
-            {
-                if (hit.transform.tag == "Stereo")
-                    _moodSlider.value += _stereoMoodUp;
+                if (Physics.Raycast(ray, out hit))
+
+                #region TV
+                {
+                    if (hit.transform.tag == "TV" && i == 0)
+                    {
+                        _moodSlider.value += _tvMoodUp;
+                        _cdMoodTasks[i].CurCooldown = 0;
+                    }
+                #endregion
+
+                #region STEREO
+
+                    if (hit.transform.tag == "Stereo" && i == 1)
+                    {
+                        _moodSlider.value += _stereoMoodUp;
+                        _cdMoodTasks[i].CurCooldown = 0;
+                    }
+                }
+                #endregion
             }
-            #endregion
         }
     }
 }
