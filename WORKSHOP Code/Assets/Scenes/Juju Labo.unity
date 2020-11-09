@@ -716,6 +716,9 @@ MonoBehaviour:
   _moodSlider: {fileID: 315222692}
   _tvMoodUp: 0.1
   _stereoMoodUp: 0.1
+  _cdMoodTasks:
+  - {fileID: 465454826}
+  - {fileID: 507511240}
 --- !u!1 &454932439
 GameObject:
   m_ObjectHideFlags: 0
@@ -898,7 +901,7 @@ MonoBehaviour:
   _filled: {fileID: 1227475728}
   _maxCooldown: 100
   _curCooldown: 0
-  _cooldownTime: 10
+  _cooldownTime: 5
 --- !u!1 &467548727
 GameObject:
   m_ObjectHideFlags: 0
@@ -1081,7 +1084,7 @@ MonoBehaviour:
   _filled: {fileID: 1505879746}
   _maxCooldown: 100
   _curCooldown: 0
-  _cooldownTime: 2
+  _cooldownTime: 21
 --- !u!1 &518693234
 GameObject:
   m_ObjectHideFlags: 0
@@ -1684,7 +1687,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -345, y: 17.1}
+  m_AnchoredPosition: {x: -345, y: 17.099976}
   m_SizeDelta: {x: -700, y: -349.70413}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &909945018
@@ -1939,7 +1942,7 @@ MonoBehaviour:
   _filled: {fileID: 1323945832}
   _maxCooldown: 100
   _curCooldown: 0
-  _cooldownTime: 10
+  _cooldownTime: 2
 --- !u!1 &995857275
 GameObject:
   m_ObjectHideFlags: 0
@@ -2141,7 +2144,7 @@ MonoBehaviour:
   _filled: {fileID: 1415693501}
   _maxCooldown: 100
   _curCooldown: 0
-  _cooldownTime: 5
+  _cooldownTime: 4
 --- !u!1 &1052755021
 GameObject:
   m_ObjectHideFlags: 0
