@@ -9,13 +9,15 @@ public class ClickAndReact : MonoBehaviour
     [SerializeField] private float _tvMoodUp = 0.1f;
     [SerializeField] private float _stereoMoodUp = 0.1f;
 
+    [SerializeField] private AudioSource _audioSource = null;
+
     [SerializeField] private List <CooldownMoodTasks> _cdMoodTasks = null;
 
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        _audioSource = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -45,6 +47,7 @@ public class ClickAndReact : MonoBehaviour
                     {
                         _moodSlider.value += _stereoMoodUp;
                         _cdMoodTasks[i].CurCooldown = 0;
+                        _audioSource.Play();
                     }
                 }
                 #endregion
