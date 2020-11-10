@@ -14,6 +14,8 @@ public class CooldownTimer : MonoBehaviour
 
     [SerializeField] private int _timeMultiplicator = 50;
 
+  
+
     void Start()
     {
         StartCoroutine (Timer());

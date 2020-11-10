@@ -5,7 +5,13 @@ using UnityEngine.UI;
 
 public class PhoneGame : MonoBehaviour
 {
-    public bool _isRinging = true;
+    private bool _isRinging = false;
+
+    public bool IsRinging
+    {
+        get { return _isRinging; }
+        set { _isRinging = value; _tempTimeStartRinging = Time.fixedTime; }
+    }
 
     [SerializeField] private int _rotationSpeed = 10;
     [SerializeField] private int _dir = -1;
@@ -17,6 +23,15 @@ public class PhoneGame : MonoBehaviour
 
     private bool _tempRinging = false;
 
+    
+    [SerializeField] private float interpolationPeriodRing = 0.1f;
+    [SerializeField] private float interpolationPeriodDontRing = 0.1f;
+    private float _tempTimeStartRinging = 0f;
+    private float _tempTimeStopRinging = 0f;
+
+    
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -26,9 +41,24 @@ public class PhoneGame : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
-     if(_isRinging == true)
+
+        if (interpolationPeriodRing + _tempTimeStartRinging < Time.fixedTime)
         {
+            _isRinging = true;
+            _tempTimeStartRinging = Time.fixedTime;
+            _tempTimeStopRinging = Time.fixedTime;
+            
+        }
+
+        if (_isRinging == true)
+        {
+            if (interpolationPeriodDontRing + _tempTimeStopRinging < Time.fixedTime)
+            {
+                _isRinging = false;
+                _tempTimeStopRinging = Time.fixedTime;
+                _tempTimeStartRinging = Time.fixedTime;
+            }
+
             if (_tempRinging == false)
             {
                 _audioSource.Play();
@@ -45,10 +75,11 @@ public class PhoneGame : MonoBehaviour
             _rectTrans.Rotate(Vector3.forward * (_rotationSpeed * _dir * Time.deltaTime));
             
         }
-     else
+        else
         {
             _tempRinging = false;
             _audioSource.Stop();
         }
+
     }
 }
