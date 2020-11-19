@@ -7515,6 +7515,7 @@ MonoBehaviour:
   _phoneGameOn: 0
   _computerOn: 0
   _coffeeGameOn: 0
+  _clamp: 730
 --- !u!1 &1980454858
 GameObject:
   m_ObjectHideFlags: 0
