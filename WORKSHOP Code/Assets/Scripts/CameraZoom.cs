@@ -9,10 +9,24 @@ public class CameraZoom : MonoBehaviour
     [SerializeField] private Transform _coffeeMarker = null;
     [SerializeField] private Transform _cameraBase = null;
 
-    [SerializeField]  private bool _phoneGameOn = false;
-    [SerializeField]  private bool _computerOn = false;
-    [SerializeField]  private bool _coffeeGameOn = false;
-    [SerializeField]  private float _clamp = 0.741267f;
+    //[SerializeField]  private bool _phoneGameOn = false;
+    //[SerializeField]  private bool _computerOn = false;
+    //[SerializeField]  private bool _coffeeGameOn = false;
+    [SerializeField]  private float _clampCoffee = 0.741267f;
+    [SerializeField]  private float _clampPhone = 0.741267f;
+
+
+    [SerializeField] private ClickAndReact _clickAndReactScript = null;
+
+    [SerializeField] private float _cameraThresholdDistance = 0.1f;
+
+    private bool _popIt = false;
+
+    public bool PopIt
+    {
+        get { return _popIt; }
+    }
+
 
     // Start is called before the first frame update
     void Start()
@@ -23,32 +37,50 @@ public class CameraZoom : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (_computerOn == true)
+        if (_clickAndReactScript.ComputerOn == true)
         {
             transform.position = Vector3.Lerp(transform.position, _computerMarker.position, Time.deltaTime);
         }
 
-        if (_phoneGameOn == true)
+        if (_clickAndReactScript.PhoneGameOn == true)
         {
-            transform.position = Vector3.Lerp(transform.position, _phoneMarker.position, Time.deltaTime);
+           transform.position = Vector3.Lerp(transform.position, _phoneMarker.position, Time.deltaTime);
+            if (transform.rotation.y < _clampPhone / 1000)
+            {
+                transform.Rotate(-Vector3.down, 25f * Time.deltaTime, Space.World);
+            }
+
+            if(Vector3.Distance(transform.position, _phoneMarker.position) <= _cameraThresholdDistance && !_clickAndReactScript.IntroDialogue.activeSelf )
+                //&& s'il n'est pas déjà affiché
+            {
+                _popIt = true;
+            }
+            
+
         }
 
-        if (_coffeeGameOn == true)
+        if (_clickAndReactScript.CoffeeGameOn == true)
         {
             transform.position = Vector3.Lerp(transform.position, _coffeeMarker.position, Time.deltaTime);
-            if (transform.rotation.y < _clamp/1000)
+            if (transform.rotation.y > _clampCoffee/1000)
             {
-                transform.Rotate(Vector3.down, 35f * Time.deltaTime, Space.World);
+                transform.Rotate(Vector3.down, 25f * Time.deltaTime, Space.World);
             }
         }
 
-        if(_coffeeGameOn == false && _phoneGameOn == false && _computerOn == false)
+        if(_clickAndReactScript.CoffeeGameOn == false && _clickAndReactScript.PhoneGameOn == false && _clickAndReactScript.ComputerOn == false)
         {
-            if (transform.rotation.y > 0)
+            if (transform.rotation.y < 0)
             {
                 transform.Rotate(-Vector3.down, 60f * Time.deltaTime, Space.World);
+            }
+
+            if (transform.rotation.y > 0)
+            {
+                transform.Rotate(Vector3.down, 60f * Time.deltaTime, Space.World);
             }
             transform.position = Vector3.Lerp(transform.position, _cameraBase.position, Time.deltaTime);
         }
     }
 }
+ 

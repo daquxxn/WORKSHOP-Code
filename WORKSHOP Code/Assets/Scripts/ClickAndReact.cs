@@ -30,10 +30,34 @@ public class ClickAndReact : MonoBehaviour
     [SerializeField] private GameObject _nextTextButton2 = null;
 
 
-    [SerializeField] private GameObject _introDialogue = null;
+    [SerializeField] private GameObject _introDialogue1 = null;
+
+    public GameObject IntroDialogue
+    { get { return _introDialogue1; } }
 
     [SerializeField] private float _questionsMoodUp = 0.1f;
     [SerializeField] private float _questionsMoodDown= 0.1f;
+
+    [SerializeField] private CameraZoom _cameraZoomScript = null;
+
+    //[SerializeField] private GameObject _panels = null;
+
+    private bool _phoneGameOn = false;
+    private bool _coffeeGameOn = false;
+    private bool _computerOn = false;
+  //  private bool _coffeeGameOn = false;
+   // private bool _computerGameOn = false;
+
+        public bool PhoneGameOn
+    { get { return _phoneGameOn; } }
+
+    public bool CoffeeGameOn
+    { get { return _coffeeGameOn; }
+        set { _coffeeGameOn = value; }
+    }
+
+    public bool ComputerOn
+    { get { return _computerOn; } }
 
 
 
@@ -46,6 +70,9 @@ public class ClickAndReact : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (_cameraZoomScript.PopIt == true)
+        { _introDialogue1.SetActive(true); }
+
         for (int i = 0; i < _cdMoodTasks.Count; i++)
         {
             if (Input.GetMouseButtonDown(0) && _cdMoodTasks[i].CurCooldown >= 100)
@@ -72,6 +99,13 @@ public class ClickAndReact : MonoBehaviour
                         _cdMoodTasks[i].CurCooldown = 0;
                         _audioSource.Play();
                     }
+
+                    if (hit.transform.tag == "Coffee" && i == 2)
+                    {
+                        _coffeeGameOn = true;
+                      //  _panels.SetActive(false);
+                    }
+                    
                 }
                 #endregion
 
@@ -87,10 +121,19 @@ public class ClickAndReact : MonoBehaviour
                 {
                     #region PHONE
 
-                    if (hit.transform.tag == "Phone" && _phoneGame.IsRinging == true)
+                    if (hit.transform.tag == "Phone" && _phoneGame.IsRinging == true )
                     {
+                        _phoneGameOn = true;
+                        //  _panels.SetActive(false);
                         _phoneGame.IsRinging = false;
-                        _introDialogue.SetActive(true);
+                        
+                    }
+                    
+
+                    if (hit.transform.tag == "Computer" )
+                    {
+                        _computerOn = true;
+                      //  _panels.SetActive(false);
                     }
                 }
             }
@@ -132,7 +175,7 @@ public class ClickAndReact : MonoBehaviour
 
     public void NextTextButton()
     {
-        if (_answerCharac == isActiveAndEnabled)
+        if (_answerCharac.activeSelf)
         {
             _answerCharac.SetActive(false);
             _answerCharac2.SetActive(false);
@@ -144,7 +187,7 @@ public class ClickAndReact : MonoBehaviour
             _nextTextButton2.SetActive(true);
         }
 
-        if (_answerCharac2 == isActiveAndEnabled)
+        if (_answerCharac2.activeSelf)
         {
             _answerCharac.SetActive(false);
             _answerCharac2.SetActive(false);
@@ -158,7 +201,7 @@ public class ClickAndReact : MonoBehaviour
             _nextTextButton2.SetActive(true);
         }
 
-        if (_answerCharac3 == isActiveAndEnabled)
+        if (_answerCharac3.activeSelf)
         {
             _answerCharac.SetActive(false);
             _answerCharac2.SetActive(false);
@@ -179,6 +222,9 @@ public class ClickAndReact : MonoBehaviour
         _imageBoss.SetActive(false);
         _answerBoss.SetActive(false);
         _nextTextButton2.SetActive(false);
+        _answerBoss3.SetActive(false);
+        _answerBoss2.SetActive(false);
+        _phoneGameOn = false;
     }
 }
 

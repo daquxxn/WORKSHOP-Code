@@ -11,6 +11,8 @@ public class CoffeeGame : MonoBehaviour
     private bool _podMoves = true;
 
     [SerializeField] private float _podDist = 0f;
+
+    [SerializeField] private ClickAndReact _clickAndReactScript = null;
     
 
     // Start is called before the first frame update
@@ -42,6 +44,7 @@ public class CoffeeGame : MonoBehaviour
                     _podMoves = false;
                     float step = _speed * Time.deltaTime;
                     transform.position = transform.position + Vector3.down * _podDist;
+                    _clickAndReactScript.CoffeeGameOn = false;
                 }
             }
         }

@@ -8,6 +8,8 @@ TagManager:
   - Stereo
   - Phone
   - CoffeePod
+  - Coffee
+  - Computer
   layers:
   - Default
   - TransparentFX
