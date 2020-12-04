@@ -59,6 +59,9 @@ public class ClickAndReact : MonoBehaviour
     public bool ComputerOn
     { get { return _computerOn; } }
 
+    [SerializeField] private float interpolationPeriodTV = 0.1f;
+    private float _tempTimeStartTV = 0f;
+
 
 
     // Start is called before the first frame update
@@ -86,7 +89,10 @@ public class ClickAndReact : MonoBehaviour
                 {
                     if (hit.transform.tag == "TV" && i == 0)
                     {
-                        _moodSlider.value += _tvMoodUp;
+                        if (interpolationPeriodTV + _tempTimeStartTV < Time.fixedTime)
+                        {
+                            _moodSlider.value += _tvMoodUp;
+                        }
                         _cdMoodTasks[i].CurCooldown = 0;
                     }
                     #endregion
