@@ -24,8 +24,8 @@ public class PhoneGame : MonoBehaviour
     private bool _tempRinging = false;
 
     
-    [SerializeField] private float interpolationPeriodRing = 0.1f;
-    [SerializeField] private float interpolationPeriodDontRing = 0.1f;
+    [SerializeField] private float _phoneCooldown = 0.1f;
+    [SerializeField] private float _phoneRingingCooldown = 0.1f;
     private float _tempTimeStartRinging = 0f;
     private float _tempTimeStopRinging = 0f;
 
@@ -43,7 +43,7 @@ public class PhoneGame : MonoBehaviour
     void Update()
     {
 
-        if (interpolationPeriodRing + _tempTimeStartRinging < Time.fixedTime)
+        if (_phoneCooldown + _tempTimeStartRinging < Time.fixedTime)
         {
             _isRinging = true;
             _tempTimeStartRinging = Time.fixedTime;
@@ -53,7 +53,7 @@ public class PhoneGame : MonoBehaviour
 
         if (_isRinging == true)
         {
-            if (interpolationPeriodDontRing + _tempTimeStopRinging < Time.fixedTime)
+            if (_phoneRingingCooldown + _tempTimeStopRinging < Time.fixedTime)
             {
                 _isRinging = false;
                 _tempTimeStopRinging = Time.fixedTime;

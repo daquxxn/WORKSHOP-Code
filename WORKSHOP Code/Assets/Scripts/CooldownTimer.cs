@@ -12,7 +12,7 @@ public class CooldownTimer : MonoBehaviour
     [SerializeField] private TextMeshProUGUI timerText1;
     private float _timer = 0f;
 
-    [SerializeField] private int _timeMultiplicator = 50;
+    [SerializeField] private int _workTimeMultiplicator = 50;
 
   
 
@@ -29,7 +29,7 @@ public class CooldownTimer : MonoBehaviour
 
         do
         {
-            _timer -= Time.deltaTime* _timeMultiplicator;
+            _timer -= Time.deltaTime* _workTimeMultiplicator;
 
             FormatText();
 
