@@ -20,6 +20,14 @@ public class CameraZoom : MonoBehaviour
 
     [SerializeField] private float _cameraThresholdDistance = 0.1f;
 
+    private bool _podMoves = false;
+
+    public bool PodMoves
+    {
+        get { return _podMoves; }
+        set { _podMoves = value; }
+    }
+
     private bool _popIt = false;
 
     public bool PopIt
@@ -44,13 +52,13 @@ public class CameraZoom : MonoBehaviour
 
         if (_clickAndReactScript.PhoneGameOn == true)
         {
-           transform.position = Vector3.Lerp(transform.position, _phoneMarker.position, Time.deltaTime);
+            transform.position = Vector3.Lerp(transform.position, _phoneMarker.position, Time.deltaTime);
             if (transform.rotation.y < _clampPhone / 1000)
             {
                 transform.Rotate(-Vector3.down, 25f * Time.deltaTime, Space.World);
             }
 
-            if(Vector3.Distance(transform.position, _phoneMarker.position) <= _cameraThresholdDistance && !_clickAndReactScript.IntroDialogue.activeSelf )
+            if (Vector3.Distance(transform.position, _phoneMarker.position) <= _cameraThresholdDistance && !_clickAndReactScript.IntroDialogue[_clickAndReactScript.IndexSet].activeSelf)
                 //&& s'il n'est pas déjà affiché
             {
                 _popIt = true;
@@ -65,6 +73,7 @@ public class CameraZoom : MonoBehaviour
             if (transform.rotation.y > _clampCoffee/1000)
             {
                 transform.Rotate(Vector3.down, 25f * Time.deltaTime, Space.World);
+                _podMoves = true;
             }
         }
 
@@ -80,6 +89,7 @@ public class CameraZoom : MonoBehaviour
                 transform.Rotate(Vector3.down, 60f * Time.deltaTime, Space.World);
             }
             transform.position = Vector3.Lerp(transform.position, _cameraBase.position, Time.deltaTime);
+            _popIt = false;
         }
     }
 }

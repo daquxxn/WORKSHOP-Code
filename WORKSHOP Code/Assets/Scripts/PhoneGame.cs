@@ -29,8 +29,10 @@ public class PhoneGame : MonoBehaviour
     private float _tempTimeStartRinging = 0f;
     private float _tempTimeStopRinging = 0f;
 
+   
 
-    
+
+
 
 
     // Start is called before the first frame update
@@ -48,7 +50,7 @@ public class PhoneGame : MonoBehaviour
             _isRinging = true;
             _tempTimeStartRinging = Time.fixedTime;
             _tempTimeStopRinging = Time.fixedTime;
-            
+
         }
 
         if (_isRinging == true)

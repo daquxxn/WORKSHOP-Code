@@ -15,24 +15,32 @@ public class ClickAndReact : MonoBehaviour
     [SerializeField] private PhoneGame _phoneGame = null;
 
     [Header("PhoneGame")]
-    [SerializeField] private GameObject _imageBoss = null;
-    [SerializeField] private GameObject _imageCharac = null;
+    [SerializeField] private List<GameObject> _imageBoss = new List<GameObject>();
+    [SerializeField] private List<GameObject> _imageCharac = new List<GameObject>();
     [SerializeField] private GameObject _panelConv = null;
-    [SerializeField] private GameObject _questionBoss = null;
-    [SerializeField] private GameObject _answerBoss = null;
-    [SerializeField] private GameObject _answerBoss2 = null;
-    [SerializeField] private GameObject _answerBoss3 = null;
-    [SerializeField] private GameObject _answersCharac = null;
-    [SerializeField] private GameObject _answerCharac = null;
-    [SerializeField] private GameObject _answerCharac2 = null;
-    [SerializeField] private GameObject _answerCharac3 = null;
-    [SerializeField] private GameObject _nextTextButton = null;
-    [SerializeField] private GameObject _nextTextButton2 = null;
+    [SerializeField] private List<GameObject> _questionBoss = new List<GameObject>();
+    [SerializeField] private List<GameObject> _answerBoss = new List<GameObject>();
+    [SerializeField] private List<GameObject> _answerBoss2 = new List<GameObject>();
+    [SerializeField] private List<GameObject> _answerBoss3 = new List<GameObject>();
+    [SerializeField] private List<GameObject> _answersCharac = new List<GameObject>();
+    [SerializeField] private List<GameObject> _answerCharac = new List<GameObject>();
+    [SerializeField] private List<GameObject> _answerCharac2 = new List<GameObject>();
+    [SerializeField] private List<GameObject> _answerCharac3 = new List<GameObject>();
+    [SerializeField] private List<GameObject> _nextTextButton = new List<GameObject>();
+    [SerializeField] private List<GameObject> _nextTextButton2 = new List<GameObject>();
+
+    [SerializeField] private int _indexSet = 0;
+    public int IndexSet
+    {
+        get { return _indexSet; }
+        set { _indexSet = value; }
+    }
+    
 
 
-    [SerializeField] private GameObject _introDialogue1 = null;
+    [SerializeField] private List<GameObject> _introDialogue1 = new List<GameObject>();
 
-    public GameObject IntroDialogue
+    public List<GameObject> IntroDialogue
     { get { return _introDialogue1; } }
 
     [SerializeField] private float _questionsMoodUp = 0.1f;
@@ -74,7 +82,7 @@ public class ClickAndReact : MonoBehaviour
     void Update()
     {
         if (_cameraZoomScript.PopIt == true)
-        { _introDialogue1.SetActive(true); }
+        { _introDialogue1[_indexSet].SetActive(true);}
 
         for (int i = 0; i < _cdMoodTasks.Count; i++)
         {
@@ -150,87 +158,98 @@ public class ClickAndReact : MonoBehaviour
     public void UpMoodBar()
     {
         _moodSlider.value += _questionsMoodUp;
-        _imageBoss.SetActive(false);
-        _questionBoss.SetActive(false);
-        _answersCharac.SetActive(false);
-        _answerCharac.SetActive(true);
-        _imageCharac.SetActive(true);
-        _nextTextButton.SetActive(true);
+        _imageBoss[_indexSet].SetActive(false);
+        _questionBoss[_indexSet].SetActive(false);
+        _answersCharac[_indexSet].SetActive(false);
+        _answerCharac[_indexSet].SetActive(true);
+        _imageCharac[_indexSet].SetActive(true);
+        _nextTextButton[_indexSet].SetActive(true);
     }
 
     public void StagMoodBar()
     {
-        _imageBoss.SetActive(false);
-        _questionBoss.SetActive(false);
-        _answersCharac.SetActive(false);
-        _answerCharac2.SetActive(true);
-        _imageCharac.SetActive(true);
-        _nextTextButton.SetActive(true);
+        _imageBoss[_indexSet].SetActive(false);
+        _questionBoss[_indexSet].SetActive(false);
+        _answersCharac[_indexSet].SetActive(false);
+        _answerCharac2[_indexSet].SetActive(true);
+        _imageCharac[_indexSet].SetActive(true);
+        _nextTextButton[_indexSet].SetActive(true);
     }
 
     public void DownMoodBar()
     {
         _moodSlider.value -= _questionsMoodDown;
-        _imageBoss.SetActive(false);
-        _questionBoss.SetActive(false);
-        _answersCharac.SetActive(false);
-        _answerCharac3.SetActive(true);
-        _imageCharac.SetActive(true);
-        _nextTextButton.SetActive(true);
+        _imageBoss[_indexSet].SetActive(false);
+        _questionBoss[_indexSet].SetActive(false);
+        _answersCharac[_indexSet].SetActive(false);
+        _answerCharac3[_indexSet].SetActive(true);
+        _imageCharac[_indexSet].SetActive(true);
+        _nextTextButton[_indexSet].SetActive(true);
     }
 
     public void NextTextButton()
     {
-        if (_answerCharac.activeSelf)
+        if (_answerCharac[_indexSet].activeSelf)
         {
-            _answerCharac.SetActive(false);
-            _answerCharac2.SetActive(false);
-            _answerCharac3.SetActive(false);
-            _imageCharac.SetActive(false);
-            _imageBoss.SetActive(true);
-            _answerBoss.SetActive(true);
-            _nextTextButton.SetActive(false);
-            _nextTextButton2.SetActive(true);
+            _answerCharac[_indexSet].SetActive(false);
+            _answerCharac2[_indexSet].SetActive(false);
+            _answerCharac3[_indexSet].SetActive(false);
+            _imageCharac[_indexSet].SetActive(false);
+            _imageBoss[_indexSet].SetActive(true);
+            _answerBoss[_indexSet].SetActive(true);
+            _nextTextButton[_indexSet].SetActive(false);
+            _nextTextButton2[_indexSet].SetActive(true);
         }
 
-        if (_answerCharac2.activeSelf)
+        if (_answerCharac2[_indexSet].activeSelf)
         {
-            _answerCharac.SetActive(false);
-            _answerCharac2.SetActive(false);
-            _answerCharac3.SetActive(false);
-            _imageCharac.SetActive(false);
-            _imageBoss.SetActive(true);
-            _answerBoss2.SetActive(true);
-            _answerBoss.SetActive(false);
-            _answerBoss3.SetActive(false);
-            _nextTextButton.SetActive(false);
-            _nextTextButton2.SetActive(true);
+            _answerCharac[_indexSet].SetActive(false);
+            _answerCharac2[_indexSet].SetActive(false);
+            _answerCharac3[_indexSet].SetActive(false);
+            _imageCharac[_indexSet].SetActive(false);
+            _imageBoss[_indexSet].SetActive(true);
+            _answerBoss2[_indexSet].SetActive(true);
+            _answerBoss[_indexSet].SetActive(false);
+            _answerBoss3[_indexSet].SetActive(false);
+            _nextTextButton[_indexSet].SetActive(false);
+            _nextTextButton2[_indexSet].SetActive(true);
         }
 
-        if (_answerCharac3.activeSelf)
+        if (_answerCharac3[_indexSet].activeSelf)
         {
-            _answerCharac.SetActive(false);
-            _answerCharac2.SetActive(false);
-            _answerCharac3.SetActive(false);
-            _imageCharac.SetActive(false);
-            _imageBoss.SetActive(true);
-            _answerBoss3.SetActive(true);
-            _answerBoss2.SetActive(false);
-            _answerBoss.SetActive(false);
-            _nextTextButton.SetActive(false);
-            _nextTextButton2.SetActive(true);
+            _answerCharac[_indexSet].SetActive(false);
+            _answerCharac2[_indexSet].SetActive(false);
+            _answerCharac3[_indexSet].SetActive(false);
+            _imageCharac[_indexSet].SetActive(false);
+            _imageBoss[_indexSet].SetActive(true);
+            _answerBoss3[_indexSet].SetActive(true);
+            _answerBoss2[_indexSet].SetActive(false);
+            _answerBoss[_indexSet].SetActive(false);
+            _nextTextButton[_indexSet].SetActive(false);
+            _nextTextButton2[_indexSet].SetActive(true);
         }
     }
 
     public void NextTextButton2()
     {
-        _panelConv.SetActive(false);
-        _imageBoss.SetActive(false);
-        _answerBoss.SetActive(false);
-        _nextTextButton2.SetActive(false);
-        _answerBoss3.SetActive(false);
-        _answerBoss2.SetActive(false);
+
+        _introDialogue1[_indexSet].SetActive(false);
+        _answersCharac[_indexSet].SetActive(true);
+        _panelConv.SetActive(true);
+        _imageBoss[_indexSet].SetActive(true);
+        _questionBoss[_indexSet].SetActive(true);
+        _answerBoss[_indexSet].SetActive(false);
+        _nextTextButton2[_indexSet].SetActive(false);
+        _answerBoss3[_indexSet].SetActive(false);
+        _answerBoss2[_indexSet].SetActive(false);
         _phoneGameOn = false;
+
+        _indexSet++;
+
+        if(_indexSet == _introDialogue1.Count)
+        {
+            _indexSet = 0;
+        }
     }
 }
 

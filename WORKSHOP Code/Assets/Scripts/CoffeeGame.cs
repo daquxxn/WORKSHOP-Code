@@ -8,7 +8,10 @@ public class CoffeeGame : MonoBehaviour
     private Vector3 _posA;
     private Vector3 _posB;
     [SerializeField] private float _speed = 1f;
-    private bool _podMoves = true;
+
+    
+
+    [SerializeField] private CameraZoom _cameraZoom = null;
 
     [SerializeField] private float _podDist = 0f;
 
@@ -25,7 +28,7 @@ public class CoffeeGame : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (_podMoves == true)
+        if (_cameraZoom.PodMoves == true)
         {
             transform.position = Vector3.Lerp(_posA, _posB, Mathf.PingPong(Time.time / _speed, 1f));
         }
@@ -41,18 +44,19 @@ public class CoffeeGame : MonoBehaviour
 
                 if (hit.transform.tag == "CoffeePod")
                 {
-                    _podMoves = false;
+                    _cameraZoom.PodMoves = false;
                     float step = _speed * Time.deltaTime;
                     transform.position = transform.position + Vector3.down * _podDist;
-                    _clickAndReactScript.CoffeeGameOn = false;
+                    
                 }
             }
         }
+        
     }
 
-    private void OnCollisionEnter(Collision collision)
+    private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("jenaimar");
+        Debug.Log("shlag marche putain");
     }
 
 }
