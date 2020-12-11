@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class CoffeeGame : MonoBehaviour
 {
@@ -16,7 +17,15 @@ public class CoffeeGame : MonoBehaviour
     [SerializeField] private float _podDist = 0f;
 
     [SerializeField] private ClickAndReact _clickAndReactScript = null;
-    
+
+    [SerializeField] private GameObject _perfect = null;
+    [SerializeField] private GameObject _lose = null;
+
+    [SerializeField] private Transform _pivotPoint = null;
+
+    [SerializeField] private float _maxWin = 0.055f;
+
+
 
     // Start is called before the first frame update
     void Start()
@@ -47,16 +56,19 @@ public class CoffeeGame : MonoBehaviour
                     _cameraZoom.PodMoves = false;
                     float step = _speed * Time.deltaTime;
                     transform.position = transform.position + Vector3.down * _podDist;
-                    
+                    if(Vector3.Distance(_pivotPoint.position, hit.transform.position) >= _maxWin)
+                    {
+                        _lose.SetActive(true);
+                    }
+                    else
+                    {
+                        _perfect.SetActive(true);
+                    }
                 }
             }
         }
         
     }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        Debug.Log("shlag marche putain");
-    }
+    
 
 }

@@ -48,6 +48,11 @@ public class ClickAndReact : MonoBehaviour
 
     [SerializeField] private CameraZoom _cameraZoomScript = null;
 
+    [SerializeField] private GameObject _computerScreen = null;
+
+    public GameObject ComputerScreen
+    { get { return _computerScreen; } }
+
     //[SerializeField] private GameObject _panels = null;
 
     private bool _phoneGameOn = false;
@@ -65,7 +70,9 @@ public class ClickAndReact : MonoBehaviour
     }
 
     public bool ComputerOn
-    { get { return _computerOn; } }
+    { get { return _computerOn; }
+        set { _computerOn = value; }
+    }
 
     [SerializeField] private float interpolationPeriodTV = 0.1f;
     private float _tempTimeStartTV = 0f;
@@ -83,6 +90,11 @@ public class ClickAndReact : MonoBehaviour
     {
         if (_cameraZoomScript.PopIt == true)
         { _introDialogue1[_indexSet].SetActive(true);}
+
+        if (_cameraZoomScript.PopItComputer == true)
+        {
+            _computerScreen.SetActive(true);
+        }
 
         for (int i = 0; i < _cdMoodTasks.Count; i++)
         {
@@ -142,19 +154,25 @@ public class ClickAndReact : MonoBehaviour
                         _phoneGame.IsRinging = false;
                         
                     }
-                    
 
-                    if (hit.transform.tag == "Computer" )
+
+                    if (hit.transform.tag == "Computer")
                     {
                         _computerOn = true;
-                      //  _panels.SetActive(false);
+                        
                     }
                 }
             }
             #endregion
         }   
     }
-    
+
+    public void ComputerStop()
+    {
+        _computerOn = false;
+     //   _computerScreen.SetActive(false);
+    }
+
     public void UpMoodBar()
     {
         _moodSlider.value += _questionsMoodUp;

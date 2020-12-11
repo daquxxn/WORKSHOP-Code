@@ -19,6 +19,7 @@ public class CameraZoom : MonoBehaviour
     [SerializeField] private ClickAndReact _clickAndReactScript = null;
 
     [SerializeField] private float _cameraThresholdDistance = 0.1f;
+    
 
     private bool _podMoves = false;
 
@@ -29,10 +30,16 @@ public class CameraZoom : MonoBehaviour
     }
 
     private bool _popIt = false;
+    private bool _popItComputer = false;
 
     public bool PopIt
     {
         get { return _popIt; }
+    }
+
+    public bool PopItComputer
+    {
+        get { return _popItComputer; }
     }
 
 
@@ -48,6 +55,12 @@ public class CameraZoom : MonoBehaviour
         if (_clickAndReactScript.ComputerOn == true)
         {
             transform.position = Vector3.Lerp(transform.position, _computerMarker.position, Time.deltaTime);
+
+            if (Vector3.Distance(transform.position, _computerMarker.position) <= _cameraThresholdDistance && !_clickAndReactScript.ComputerScreen.activeSelf)
+            //&& s'il n'est pas déjà affiché
+            {
+                _popItComputer = true;
+            }
         }
 
         if (_clickAndReactScript.PhoneGameOn == true)
@@ -92,5 +105,7 @@ public class CameraZoom : MonoBehaviour
             _popIt = false;
         }
     }
+
+    
 }
  
