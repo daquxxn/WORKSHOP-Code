@@ -269,5 +269,11 @@ public class ClickAndReact : MonoBehaviour
             _indexSet = 0;
         }
     }
+
+
+    public void CoffeeGameStop()
+    {
+        _coffeeGameOn = false;
+    }
 }
 
