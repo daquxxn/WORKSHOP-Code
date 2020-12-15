@@ -5,15 +5,13 @@ using UnityEngine.UI;
 
 public class WorkSlider : MonoBehaviour
 {
-    [SerializeField] private Transform _barParent = null;
-    [SerializeField] private Transform _barParentOriginal = null;
-    [SerializeField] private Transform _barLocation = null;
-
-    [SerializeField] private Transform _actualTransform = null;
-
-    [SerializeField] private Slider _workSlider = null;
+    
     [SerializeField] private float _workUp = 0.1f;
     [SerializeField] private bool _isWorking = false;
+
+    [SerializeField] private WorkMoodController _workMoodCont = null;
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -25,23 +23,24 @@ public class WorkSlider : MonoBehaviour
     {
         if (_isWorking)
         {
-            _workSlider.value += _workUp;
+            _workMoodCont.LinearIncreaseWork(_workUp);
+        }
+        else
+        {
+            _workMoodCont.StopLinearIncreaseWork();
         }
     }
 
     public void IsWorking ()
     {
-        transform.SetParent(_barParent);
-        transform.position = _barLocation.position;
         _isWorking = true;
     }
 
     public void IsntWorking ()
     {
-        transform.SetParent(_barParentOriginal);
-        transform.position = _actualTransform.position;
         _isWorking = false;
     }
+    
     
 
 }

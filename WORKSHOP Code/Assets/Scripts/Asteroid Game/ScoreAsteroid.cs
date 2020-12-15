@@ -9,6 +9,10 @@ public class ScoreAsteroid : MonoBehaviour
     private int _score = 0;
     [SerializeField] private TextMeshProUGUI _printScore = null;
 
+    [SerializeField] private WorkMoodController _workMoodCont = null;
+
+    [SerializeField] private float _asteMoodUp = 1f;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -24,5 +28,6 @@ public class ScoreAsteroid : MonoBehaviour
     public void Score()
     {
         _score += 1;
+        _workMoodCont.InstantIncreaseMood(_asteMoodUp);
     }
 }

@@ -50,6 +50,11 @@ public class ClickAndReact : MonoBehaviour
 
     [SerializeField] private GameObject _computerScreen = null;
 
+    [SerializeField] private WorkMoodController _workMoodCont = null;
+
+    private bool _doesntIncrease = false;
+    private float _increaseTime = 1f;
+
     public GameObject ComputerScreen
     { get { return _computerScreen; } }
 
@@ -77,7 +82,7 @@ public class ClickAndReact : MonoBehaviour
     [SerializeField] private float interpolationPeriodTV = 0.1f;
     private float _tempTimeStartTV = 0f;
 
-
+    private Coroutine _currentCoroutine = null;
 
     // Start is called before the first frame update
     void Start()
@@ -85,9 +90,15 @@ public class ClickAndReact : MonoBehaviour
         _audioSource = GetComponent<AudioSource>();
     }
 
-    // Update is called once per frame
-    void Update()
+    IEnumerator StopIncrease()
     {
+        yield return new WaitForSeconds(5);
+        _workMoodCont.StopLinearIncreaseMood();
+    }
+        // Update is called once per frame
+        void Update()
+    {
+
         if (_cameraZoomScript.PopIt == true)
         { _introDialogue1[_indexSet].SetActive(true);}
 
@@ -104,24 +115,24 @@ public class ClickAndReact : MonoBehaviour
                 RaycastHit hit;
 
                 if (Physics.Raycast(ray, out hit))
-
-                #region TV
+                    
                 {
                     if (hit.transform.tag == "TV" && i == 0)
                     {
-                        if (interpolationPeriodTV + _tempTimeStartTV < Time.fixedTime)
-                        {
-                            _moodSlider.value += _tvMoodUp;
-                        }
+                        _workMoodCont.LinearIncreaseMood(_tvMoodUp);
+                        if (_currentCoroutine != null)
+                        { StopCoroutine(_currentCoroutine); }
+                       _currentCoroutine = StartCoroutine(StopIncrease());
                         _cdMoodTasks[i].CurCooldown = 0;
                     }
-                    #endregion
-
-                    #region STEREO
-
+                    
+                    
                     if (hit.transform.tag == "Stereo" && i == 1)
                     {
-                        _moodSlider.value += _stereoMoodUp;
+                        _workMoodCont.LinearIncreaseMood(_stereoMoodUp);
+                        if (_currentCoroutine != null)
+                        { StopCoroutine(_currentCoroutine); }
+                        _currentCoroutine=  StartCoroutine(StopIncrease());
                         _cdMoodTasks[i].CurCooldown = 0;
                         _audioSource.Play();
                     }
@@ -133,7 +144,6 @@ public class ClickAndReact : MonoBehaviour
                     }
                     
                 }
-                #endregion
 
 
             }
@@ -175,7 +185,7 @@ public class ClickAndReact : MonoBehaviour
 
     public void UpMoodBar()
     {
-        _moodSlider.value += _questionsMoodUp;
+        _workMoodCont.InstantIncreaseMood(_questionsMoodUp);
         _imageBoss[_indexSet].SetActive(false);
         _questionBoss[_indexSet].SetActive(false);
         _answersCharac[_indexSet].SetActive(false);
@@ -196,7 +206,7 @@ public class ClickAndReact : MonoBehaviour
 
     public void DownMoodBar()
     {
-        _moodSlider.value -= _questionsMoodDown;
+        _workMoodCont.InstantDecreaseMood(_questionsMoodDown);
         _imageBoss[_indexSet].SetActive(false);
         _questionBoss[_indexSet].SetActive(false);
         _answersCharac[_indexSet].SetActive(false);

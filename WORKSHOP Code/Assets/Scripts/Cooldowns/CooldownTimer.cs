@@ -14,28 +14,30 @@ public class CooldownTimer : MonoBehaviour
 
     [SerializeField] private int _workTimeMultiplicator = 50;
 
-  
+    /*public float TimerCD
+    {
+        get { return _timer; }
+    }*/
+
+    public float TimerCD => _timer;
+
+    [SerializeField] private WorkMoodController _workMoodCont = null;
 
     void Start()
     {
-        StartCoroutine (Timer());
+        _timer = _startTime;
     }
 
     #region Timer
-
-    private IEnumerator Timer()
+    
+    private void Update()
     {
-        _timer = _startTime;
-
-        do
+        if (_workMoodCont.IsGameFinished == false)
         {
-            _timer -= Time.deltaTime* _workTimeMultiplicator;
-
-            FormatText();
-
-            yield return null;
+            _timer -= Time.deltaTime * _workTimeMultiplicator;
         }
-        while(_timer > 0);
+
+        FormatText();
     }
 
     private void FormatText()
@@ -45,8 +47,14 @@ public class CooldownTimer : MonoBehaviour
         //int seconds = (int)(_timer % 60);
 
         timerText1.text = "";
-        if(hours >0) { timerText1.text += hours + "h "; }
-        if (minutes >0) { timerText1.text += minutes + "m "; }
+        if(hours >0)
+        {
+            timerText1.text += hours + "h ";
+        }
+        if (minutes >0)
+        {
+            timerText1.text += minutes + "m ";
+        }
        // if (seconds >0) { timerText1.text += seconds + "s "; }
     }
     #endregion

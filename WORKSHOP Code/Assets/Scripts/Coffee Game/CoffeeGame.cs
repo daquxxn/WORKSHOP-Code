@@ -31,6 +31,8 @@ public class CoffeeGame : MonoBehaviour
 
     [SerializeField] private GameObject _backButton = null;
 
+    [SerializeField] private WorkMoodController _workMoodCont = null;
+
 
 
     // Start is called before the first frame update
@@ -66,13 +68,15 @@ public class CoffeeGame : MonoBehaviour
                     {
                         _lose.SetActive(true);
                         _backButton.SetActive(true);
-                        _moodSlider.value -= _coffeeMoodDown;
+
+                        _workMoodCont.InstantIncreaseMood(-_coffeeMoodDown);
                     }
                     else
                     {
                         _perfect.SetActive(true);
                         _backButton.SetActive(true);
-                        _moodSlider.value += _coffeeMoodUp;
+                        
+                        _workMoodCont.InstantIncreaseMood(_coffeeMoodUp);
                     }
                 }
             }
