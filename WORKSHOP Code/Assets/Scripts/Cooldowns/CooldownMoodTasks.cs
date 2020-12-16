@@ -7,37 +7,23 @@ public class CooldownMoodTasks : MonoBehaviour
 {
     [SerializeField] private Image _bar;
     [SerializeField] GameObject  _filled;
-    [SerializeField] private float _maxCooldown = 100f;
-    [SerializeField] private float _curCooldown = 0f;
     [SerializeField] private int _cooldownTime = 2;
+
+    public bool IsFinished => _timeStamp >= _cooldownTime;
+
+    private bool _isActive = false;
+
+    private float _timeStamp = 0f;
 
     public float CurCooldown
     {
-        get { return _curCooldown; }
-        set { _curCooldown = value;  }
-    }
-        
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        InvokeRepeating("DecreaseCooldown", 0f, 1f);
+        get { return _timeStamp; }
+        set { _timeStamp = value;  }
     }
 
-    private void DecreaseCooldown()
+    private void Start()
     {
-        if (_curCooldown + _cooldownTime >= 100)
-        {
-            _curCooldown += 100 - _curCooldown;
-        }
-        else
-        {
-            _curCooldown += _cooldownTime;
-          
-        }
-        float calcCD = _curCooldown / _maxCooldown;
-        SetCooldown(calcCD);
-
+        LaunchCooldown();
     }
 
     private void SetCooldown(float theCooldown)
@@ -48,13 +34,34 @@ public class CooldownMoodTasks : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (_curCooldown >= 100)
+        if (_isActive)
+        {
+            _timeStamp += Time.deltaTime;
+            float perc = _timeStamp / _cooldownTime;
+        
+        SetCooldown(perc);
+        }
+
+        if (IsFinished == true)
         {
             _filled.SetActive(true);
+            _bar.gameObject.SetActive(false);
+            _isActive = false;
+
         }
-        else
-        {
-            _filled.SetActive(false);
-        }
+
+    }
+
+    public void LaunchCooldown()
+    {
+        _timeStamp = 0;
+        _isActive = true;
+        _filled.SetActive(false);
+        _bar.gameObject.SetActive(true);
+    }
+
+    public void ResetCooldown()
+    {
+
     }
 }

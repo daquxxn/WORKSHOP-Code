@@ -55,6 +55,9 @@ public class ClickAndReact : MonoBehaviour
     private bool _doesntIncrease = false;
     private float _increaseTime = 1f;
 
+    
+    [SerializeField] private float _tvAndMusicDuration = 1f;
+
     public GameObject ComputerScreen
     { get { return _computerScreen; } }
 
@@ -92,7 +95,7 @@ public class ClickAndReact : MonoBehaviour
 
     IEnumerator StopIncrease()
     {
-        yield return new WaitForSeconds(5);
+        yield return new WaitForSeconds(_tvAndMusicDuration);
         _workMoodCont.StopLinearIncreaseMood();
     }
         // Update is called once per frame
@@ -109,7 +112,7 @@ public class ClickAndReact : MonoBehaviour
 
         for (int i = 0; i < _cdMoodTasks.Count; i++)
         {
-            if (Input.GetMouseButtonDown(0) && _cdMoodTasks[i].CurCooldown >= 100)
+            if (Input.GetMouseButtonDown(0) && _cdMoodTasks[i].IsFinished)
             {
                 Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
                 RaycastHit hit;
@@ -123,7 +126,7 @@ public class ClickAndReact : MonoBehaviour
                         if (_currentCoroutine != null)
                         { StopCoroutine(_currentCoroutine); }
                        _currentCoroutine = StartCoroutine(StopIncrease());
-                        _cdMoodTasks[i].CurCooldown = 0;
+                        _cdMoodTasks[i].LaunchCooldown();
                     }
                     
                     
@@ -133,7 +136,7 @@ public class ClickAndReact : MonoBehaviour
                         if (_currentCoroutine != null)
                         { StopCoroutine(_currentCoroutine); }
                         _currentCoroutine=  StartCoroutine(StopIncrease());
-                        _cdMoodTasks[i].CurCooldown = 0;
+                        _cdMoodTasks[i].LaunchCooldown();
                         _audioSource.Play();
                     }
 
@@ -142,7 +145,17 @@ public class ClickAndReact : MonoBehaviour
                         _coffeeGameOn = true;
                       //  _panels.SetActive(false);
                     }
-                    
+
+                   /* if(hit.transform.tag == "Socials" && i == 3)
+                    {
+                        Debug.Log("social");
+                    }
+
+                    if (hit.transform.tag == "Aste" && i == 4)
+                    {
+                        Debug.Log("aste");
+                    }*/
+
                 }
 
 
