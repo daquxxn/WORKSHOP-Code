@@ -13,7 +13,7 @@ public class WorkMoodController : MonoBehaviour
     private float _increasingWorkFactor = 1f;
 
      private float _currentWork = 0f;
-     private float _currentMood = 100f;
+    [SerializeField] private float _currentMood = 100f;
 
     private bool _isMoodIncreasing = false;
 
