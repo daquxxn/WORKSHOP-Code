@@ -12,14 +12,23 @@ public class CameraZoom : MonoBehaviour
     //[SerializeField]  private bool _phoneGameOn = false;
     //[SerializeField]  private bool _computerOn = false;
     //[SerializeField]  private bool _coffeeGameOn = false;
-    [SerializeField]  private float _clampCoffee = 0.741267f;
-    [SerializeField]  private float _clampPhone = 0.741267f;
+    [SerializeField] private float _clampCoffee = 0.741267f;
+    [SerializeField] private float _clampPhone = 0.741267f;
 
 
     [SerializeField] private ClickAndReact _clickAndReactScript = null;
 
     [SerializeField] private float _cameraThresholdDistance = 0.1f;
-    
+    [SerializeField] private float _cameraThresholdDistanceForIcons = 0.3f;
+
+    [SerializeField] private GameObject _canvasIcone = null;
+
+    private bool _coffeeGameIsOn = false;
+
+    public bool CoffeeGameIsOn 
+        {
+        get { return _coffeeGameIsOn; }
+        }
 
     private bool _podMoves = false;
 
@@ -87,6 +96,7 @@ public class CameraZoom : MonoBehaviour
 
         if (_clickAndReactScript.CoffeeGameOn == true)
         {
+            _coffeeGameIsOn = true;
             transform.position = Vector3.Lerp(transform.position, _coffeeMarker.position, Time.deltaTime);
             if (transform.rotation.y > _clampCoffee/1000)
             {
@@ -108,6 +118,13 @@ public class CameraZoom : MonoBehaviour
             }
             transform.position = Vector3.Lerp(transform.position, _cameraBase.position, Time.deltaTime);
             _popIt = false;
+
+            if (Vector3.Distance(transform.position, _cameraBase.position) <= _cameraThresholdDistanceForIcons)
+            //&& s'il n'est pas déjà affiché
+            {
+                _canvasIcone.SetActive(true);
+            }
+           
         }
     }
 

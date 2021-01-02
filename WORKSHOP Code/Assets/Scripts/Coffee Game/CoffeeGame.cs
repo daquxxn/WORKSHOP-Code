@@ -32,7 +32,8 @@ public class CoffeeGame : MonoBehaviour
     [SerializeField] private GameObject _backButton = null;
 
     [SerializeField] private WorkMoodController _workMoodCont = null;
-
+    [SerializeField] private CameraZoom _camZoom = null;
+    
 
 
     // Start is called before the first frame update
@@ -59,8 +60,9 @@ public class CoffeeGame : MonoBehaviour
             if (Physics.Raycast(ray, out hit))
             {
 
-                if (hit.transform.tag == "CoffeePod")
+                if (hit.transform.tag == "CoffeePod" && _camZoom.CoffeeGameIsOn)
                 {
+                    
                     _cameraZoom.PodMoves = false;
                     float step = _speed * Time.deltaTime;
                     transform.position = transform.position + Vector3.down * _podDist;
@@ -75,7 +77,7 @@ public class CoffeeGame : MonoBehaviour
                     {
                         _perfect.SetActive(true);
                         _backButton.SetActive(true);
-                        
+
                         _workMoodCont.InstantIncreaseMood(_coffeeMoodUp);
                     }
                 }

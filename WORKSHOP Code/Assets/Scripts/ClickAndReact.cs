@@ -87,6 +87,8 @@ public class ClickAndReact : MonoBehaviour
 
     private Coroutine _currentCoroutine = null;
 
+    [SerializeField] private GameObject _canvasIcone = null;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -143,7 +145,8 @@ public class ClickAndReact : MonoBehaviour
                     if (hit.transform.tag == "Coffee" && i == 2)
                     {
                         _coffeeGameOn = true;
-                      //  _panels.SetActive(false);
+                        _canvasIcone.SetActive(false);
+                        //  _panels.SetActive(false);
                     }
 
                    /* if(hit.transform.tag == "Socials" && i == 3)
@@ -175,14 +178,14 @@ public class ClickAndReact : MonoBehaviour
                         _phoneGameOn = true;
                         //  _panels.SetActive(false);
                         _phoneGame.IsRinging = false;
-                        
+                        _canvasIcone.SetActive(false);
                     }
 
 
                     if (hit.transform.tag == "Computer")
                     {
                         _computerOn = true;
-                        
+                        _canvasIcone.SetActive(false);
                     }
                 }
             }

@@ -54,6 +54,8 @@ public class WorkMoodController : MonoBehaviour
     public bool IsGameFinished
     { get { return _isGameFinished; } }
 
+    [SerializeField] private GameObject _UiPanel = null;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -66,12 +68,14 @@ public class WorkMoodController : MonoBehaviour
        
         if(_currentMood <= 0 || _cooldownTimer.TimerCD <= 0)
         {
+            _UiPanel.SetActive(false);
             _losePanel.SetActive(true);
             _isGameFinished = true;
         }
 
         if(_currentWork >= 100)
         {
+            _UiPanel.SetActive(false);
             _winPanel.SetActive(true);
             _isGameFinished = true;
         }

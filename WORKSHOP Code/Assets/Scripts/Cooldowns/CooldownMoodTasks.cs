@@ -9,6 +9,7 @@ public class CooldownMoodTasks : MonoBehaviour
     [SerializeField] GameObject  _filled;
     [SerializeField] private int _cooldownTime = 2;
 
+
     public bool IsFinished => _timeStamp >= _cooldownTime;
 
     private bool _isActive = false;
