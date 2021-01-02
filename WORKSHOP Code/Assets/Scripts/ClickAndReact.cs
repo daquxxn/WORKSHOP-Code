@@ -146,6 +146,7 @@ public class ClickAndReact : MonoBehaviour
                     {
                         _coffeeGameOn = true;
                         _canvasIcone.SetActive(false);
+                        _cdMoodTasks[i].LaunchCooldown();
                         //  _panels.SetActive(false);
                     }
 

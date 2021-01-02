@@ -6,9 +6,15 @@ using UnityEngine.UI;
 public class ClickAndReactButtons : MonoBehaviour
 {
 
-    [SerializeField] private CooldownMoodTasks _cdMoodTasks = null;
+    [SerializeField] private List <CooldownMoodTasks> _cdMoodTasks = null;
+    
 
-    [SerializeField] private Button _button = null;
+    private bool _startMiniGame = false;
+
+    [SerializeField] private GameObject _menuJeu = null;
+    [SerializeField] private GameObject _menuReseau = null;
+
+    private int _indexSet = 0;
 
     // Start is called before the first frame update
     void Start()
@@ -19,11 +25,30 @@ public class ClickAndReactButtons : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-      // _button
+       if( _cdMoodTasks[_indexSet].IsFinished)
+        {
+            _startMiniGame = true;
+        }
     }
 
-    public void Work()
+    public void AsteroidGame(int i)
     {
-       
+       if (_startMiniGame)
+        {
+            _indexSet = i;
+            _menuJeu.SetActive(true);
+            _cdMoodTasks[i].LaunchCooldown();
+        }
+    }
+
+    public void SocialNetwork(int i)
+    {
+
+        if (_startMiniGame)
+        {
+            _indexSet = i;
+            _menuReseau.SetActive(true);
+            _cdMoodTasks[i].LaunchCooldown();
+        }
     }
 }
