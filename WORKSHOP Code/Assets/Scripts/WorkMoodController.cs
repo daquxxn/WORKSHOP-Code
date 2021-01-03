@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Rendering.PostProcessing;
 
 public class WorkMoodController : MonoBehaviour
 {
@@ -56,10 +57,19 @@ public class WorkMoodController : MonoBehaviour
 
     [SerializeField] private GameObject _UiPanel = null;
 
+    [SerializeField] private GameObject _vHappy = null;
+    [SerializeField] private GameObject _happy = null;
+    [SerializeField] private GameObject _meh = null;
+    [SerializeField] private GameObject _sad = null;
+
+    [SerializeField] private Image _moodColour = null;
+    
+
+
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
@@ -94,8 +104,48 @@ public class WorkMoodController : MonoBehaviour
             _currentWork += _increasingWorkFactor * Time.deltaTime;
         }
 
-       
+        if(_currentMood <= 20f)
+        {
+            _vHappy.SetActive(false);
+            _happy.SetActive(false);
+            _meh.SetActive(false);
+            _sad.SetActive(true);
+            _moodColour.color = Color.red;
+        }
+
+        if (_currentMood >= 21f && _currentMood <= 50f)
+        {
+            _vHappy.SetActive(false);
+            _happy.SetActive(false);
+            _meh.SetActive(true);
+            _sad.SetActive(false);
+
+            _moodColour.color = Color.yellow;
+        }
+
+        if (_currentMood >= 51f && _currentMood <= 80f)
+        {
+            _vHappy.SetActive(false);
+            _happy.SetActive(true);
+            _meh.SetActive(false);
+            _sad.SetActive(false);
+            _moodColour.color = Color.green;
+        }
+
+        if (_currentMood >= 81f)
+        {
+            _vHappy.SetActive(true);
+            _happy.SetActive(false);
+            _meh.SetActive(false);
+            _sad.SetActive(false);
+            _moodColour.color = Color.green;
+        }
+
+
     }
+
+
+
 
     public void LinearIncreaseMood(float increaseFactor)
     {
