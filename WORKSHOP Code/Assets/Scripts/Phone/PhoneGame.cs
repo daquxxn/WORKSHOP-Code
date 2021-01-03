@@ -30,11 +30,6 @@ public class PhoneGame : MonoBehaviour
     private float _tempTimeStopRinging = 0f;
 
    
-
-
-
-
-
     // Start is called before the first frame update
     void Start()
     {

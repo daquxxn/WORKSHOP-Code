@@ -33,14 +33,16 @@ public class CoffeeGame : MonoBehaviour
 
     [SerializeField] private WorkMoodController _workMoodCont = null;
     [SerializeField] private CameraZoom _camZoom = null;
-    
 
+    private AudioSource _audioSource = null;
 
     // Start is called before the first frame update
     void Start()
     {
         _posA = transform.position;
         _posB = _farEnd.position;
+
+        _audioSource = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -62,7 +64,7 @@ public class CoffeeGame : MonoBehaviour
 
                 if (hit.transform.tag == "CoffeePod" && _camZoom.CoffeeGameIsOn)
                 {
-                    
+                    _audioSource.Play();
                     _cameraZoom.PodMoves = false;
                     float step = _speed * Time.deltaTime;
                     transform.position = transform.position + Vector3.down * _podDist;
