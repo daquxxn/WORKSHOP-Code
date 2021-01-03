@@ -65,6 +65,14 @@ public class WorkMoodController : MonoBehaviour
 
     [SerializeField] private int _taskOnGoing = 0;
 
+    private bool _vigIsChanging = false;
+
+
+    public bool VigIsChanging
+    {
+        get { return _vigIsChanging; }
+    }
+
 
     // Start is called before the first frame update
     void Start()
@@ -111,7 +119,8 @@ public class WorkMoodController : MonoBehaviour
             _meh.SetActive(false);
             _sad.SetActive(true);
             _moodColour.color = Color.red;
-            
+
+            _vigIsChanging = true;
         }
 
         if (_currentMood >= 21f && _currentMood <= 50f)
@@ -122,6 +131,8 @@ public class WorkMoodController : MonoBehaviour
             _sad.SetActive(false);
 
             _moodColour.color = Color.yellow;
+
+            _vigIsChanging = false;
         }
 
         if (_currentMood >= 51f && _currentMood <= 80f)
@@ -131,6 +142,8 @@ public class WorkMoodController : MonoBehaviour
             _meh.SetActive(false);
             _sad.SetActive(false);
             _moodColour.color = Color.green;
+
+            _vigIsChanging = false;
         }
 
         if (_currentMood >= 81f)
@@ -140,6 +153,8 @@ public class WorkMoodController : MonoBehaviour
             _meh.SetActive(false);
             _sad.SetActive(false);
             _moodColour.color = Color.green;
+
+            _vigIsChanging = false;
         }
 
 

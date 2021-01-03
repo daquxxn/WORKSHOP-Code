@@ -7,20 +7,41 @@ using UnityEngine.Rendering.PostProcessing;
 public class postpro : MonoBehaviour
 {
 
-    private PostProcessVolume v;
-    private Vignette vg;
+    private PostProcessVolume _vol;
+    private Vignette _vg;
+
+
+    [SerializeField] private WorkMoodController _wMController = null;
+
+    [SerializeField] private float _vignIntensity = 0.5f;
 
     // Start is called before the first frame update
     void Start()
     {
-        v = GetComponent<PostProcessVolume>();
-        v.profile.TryGetSettings(out vg);
+        _vol = GetComponent<PostProcessVolume>();
+        _vol.profile.TryGetSettings(out _vg);
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (_wMController.VigIsChanging == true)
+        {
+            VignetteChange();
+        }
+        else
+        {
+            VignetteChangeBack();
+        }
+    }
 
-        vg.intensity.value = 0.5f;
+    public void VignetteChange()
+    {
+        _vg.intensity.value = _vignIntensity;
+    }
+
+    public void VignetteChangeBack()
+    {
+        _vg.intensity.value = 0;
     }
 }
