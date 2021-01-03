@@ -39,7 +39,7 @@ public class CooldownMoodTasks : MonoBehaviour
         {
             _timeStamp += Time.deltaTime;
             float perc = _timeStamp / _cooldownTime;
-        
+            
         SetCooldown(perc);
         }
 

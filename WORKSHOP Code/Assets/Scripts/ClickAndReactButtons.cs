@@ -39,6 +39,7 @@ public class ClickAndReactButtons : MonoBehaviour
             _menuJeu.SetActive(true);
             _cdMoodTasks[i].LaunchCooldown();
             _cdMoodTasks[i+2].LaunchCooldown();
+
         }
     }
 
