@@ -13,10 +13,12 @@ public class ScoreAsteroid : MonoBehaviour
 
     [SerializeField] private float _asteMoodUp = 1f;
 
+    private AudioSource _audioSource = null;
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        _audioSource = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -29,5 +31,7 @@ public class ScoreAsteroid : MonoBehaviour
     {
         _score += 1;
         _workMoodCont.InstantIncreaseMood(_asteMoodUp);
+
+        _audioSource.Play();
     }
 }

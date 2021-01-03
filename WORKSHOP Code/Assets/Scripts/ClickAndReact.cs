@@ -90,6 +90,8 @@ public class ClickAndReact : MonoBehaviour
 
     [SerializeField] private GameObject _canvasIcone = null;
 
+    [SerializeField] private GameObject _friends = null;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -108,7 +110,7 @@ public class ClickAndReact : MonoBehaviour
     {
         yield return new WaitForSeconds(_tvAndMusicDuration);
         _workMoodCont.StopLinearIncreaseMood(_tvMoodUp);
-
+        _friends.SetActive(false);
         Debug.Log("tv");
     }
     // Update is called once per frame
@@ -136,10 +138,12 @@ public class ClickAndReact : MonoBehaviour
                     if (hit.transform.tag == "TV" && i == 0)
                     {
                         _workMoodCont.LinearIncreaseMood(_tvMoodUp);
+                        _friends.SetActive(true);
                         if (_currentCoroutineTV != null)
                         { StopCoroutine(_currentCoroutineTV); }
                        _currentCoroutineTV = StartCoroutine(StopIncreaseTV());
                         _cdMoodTasks[i].LaunchCooldown();
+                        
                     }
                     
                     
