@@ -9,4 +9,10 @@ public class Ordi_Menu : MonoBehaviour {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
         // voir dans les options l'ordre des Scènes du jeu pour que ca marche
 }
+
+
+    public void QuitGame()
+    {
+        Application.Quit();
+    }
 }
