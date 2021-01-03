@@ -85,7 +85,8 @@ public class ClickAndReact : MonoBehaviour
     [SerializeField] private float interpolationPeriodTV = 0.1f;
     private float _tempTimeStartTV = 0f;
 
-    private Coroutine _currentCoroutine = null;
+    private Coroutine _currentCoroutineTV = null;
+    private Coroutine _currentCoroutineStereo = null;
 
     [SerializeField] private GameObject _canvasIcone = null;
 
@@ -95,13 +96,23 @@ public class ClickAndReact : MonoBehaviour
         _audioSource = GetComponent<AudioSource>();
     }
 
-    IEnumerator StopIncrease()
+    IEnumerator StopIncreaseStereo()
     {
         yield return new WaitForSeconds(_tvAndMusicDuration);
-        _workMoodCont.StopLinearIncreaseMood();
+        _workMoodCont.StopLinearIncreaseMood(_stereoMoodUp);
+
+        Debug.Log("stereo");
     }
-        // Update is called once per frame
-        void Update()
+
+    IEnumerator StopIncreaseTV()
+    {
+        yield return new WaitForSeconds(_tvAndMusicDuration);
+        _workMoodCont.StopLinearIncreaseMood(_tvMoodUp);
+
+        Debug.Log("tv");
+    }
+    // Update is called once per frame
+    void Update()
     {
 
         if (_cameraZoomScript.PopIt == true)
@@ -125,9 +136,9 @@ public class ClickAndReact : MonoBehaviour
                     if (hit.transform.tag == "TV" && i == 0)
                     {
                         _workMoodCont.LinearIncreaseMood(_tvMoodUp);
-                        if (_currentCoroutine != null)
-                        { StopCoroutine(_currentCoroutine); }
-                       _currentCoroutine = StartCoroutine(StopIncrease());
+                        if (_currentCoroutineTV != null)
+                        { StopCoroutine(_currentCoroutineTV); }
+                       _currentCoroutineTV = StartCoroutine(StopIncreaseTV());
                         _cdMoodTasks[i].LaunchCooldown();
                     }
                     
@@ -135,9 +146,9 @@ public class ClickAndReact : MonoBehaviour
                     if (hit.transform.tag == "Stereo" && i == 1)
                     {
                         _workMoodCont.LinearIncreaseMood(_stereoMoodUp);
-                        if (_currentCoroutine != null)
-                        { StopCoroutine(_currentCoroutine); }
-                        _currentCoroutine=  StartCoroutine(StopIncrease());
+                        if (_currentCoroutineStereo != null)
+                        { StopCoroutine(_currentCoroutineStereo); }
+                        _currentCoroutineStereo =  StartCoroutine(StopIncreaseStereo());
                         _cdMoodTasks[i].LaunchCooldown();
                         _audioSource.Play();
                     }

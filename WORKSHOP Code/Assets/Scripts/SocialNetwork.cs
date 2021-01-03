@@ -27,6 +27,6 @@ public class SocialNetwork : MonoBehaviour
 
     private void OnDisable()
     {
-        _workMoodCont.StopLinearIncreaseMood();
+        _workMoodCont.StopLinearIncreaseMood(_socialNetwUp);
     }
 }

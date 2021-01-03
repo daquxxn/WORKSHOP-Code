@@ -38,6 +38,7 @@ public class ClickAndReactButtons : MonoBehaviour
             _indexSet = i;
             _menuJeu.SetActive(true);
             _cdMoodTasks[i].LaunchCooldown();
+            _cdMoodTasks[i+2].LaunchCooldown();
         }
     }
 
@@ -49,6 +50,7 @@ public class ClickAndReactButtons : MonoBehaviour
             _indexSet = i;
             _menuReseau.SetActive(true);
             _cdMoodTasks[i].LaunchCooldown();
+            _cdMoodTasks[i+2].LaunchCooldown();
         }
     }
 }

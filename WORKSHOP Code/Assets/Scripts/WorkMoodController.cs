@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.Rendering.PostProcessing;
 
 public class WorkMoodController : MonoBehaviour
 {
@@ -63,13 +62,14 @@ public class WorkMoodController : MonoBehaviour
     [SerializeField] private GameObject _sad = null;
 
     [SerializeField] private Image _moodColour = null;
-    
+
+    [SerializeField] private int _taskOnGoing = 0;
 
 
     // Start is called before the first frame update
     void Start()
     {
-
+        
     }
 
     // Update is called once per frame
@@ -111,6 +111,7 @@ public class WorkMoodController : MonoBehaviour
             _meh.SetActive(false);
             _sad.SetActive(true);
             _moodColour.color = Color.red;
+            
         }
 
         if (_currentMood >= 21f && _currentMood <= 50f)
@@ -146,11 +147,11 @@ public class WorkMoodController : MonoBehaviour
 
 
 
-
     public void LinearIncreaseMood(float increaseFactor)
     {
         _isMoodIncreasing = true;
-        _increasingMoodFactor = increaseFactor;
+        _increasingMoodFactor += increaseFactor;
+        _taskOnGoing++;
     }
 
     public void LinearIncreaseWork (float increaseFactor)
@@ -169,9 +170,19 @@ public class WorkMoodController : MonoBehaviour
         CurrentMood -= increaseValue;
     }
 
-    public void StopLinearIncreaseMood()
+    public void StopLinearIncreaseMood(float increaseFactor)
     {
-        _isMoodIncreasing = false;
+        _increasingMoodFactor -= increaseFactor;
+
+        if (_taskOnGoing > 1)
+        {
+            _taskOnGoing--;
+        }
+        else
+        {
+            _taskOnGoing = 0;
+            _isMoodIncreasing = false;
+        }
     }
 
     public void StopLinearIncreaseWork()
