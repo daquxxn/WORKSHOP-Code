@@ -24,6 +24,9 @@ public class CameraZoom : MonoBehaviour
     [SerializeField] private GameObject _canvasIcone = null;
 
     [SerializeField] private float _speedCamera = 2f;
+    [SerializeField] private float _angleSpeedBack = 60f;
+    [SerializeField] private float _angleSpeedCoffee = 25f;
+    [SerializeField] private float _angleSpeedPhone = 25f;
 
     private bool _coffeeGameIsOn = false;
 
@@ -84,7 +87,7 @@ public class CameraZoom : MonoBehaviour
             transform.position = Vector3.Lerp(transform.position, _phoneMarker.position, _speedCamera * Time.deltaTime);
             if (transform.rotation.y < _clampPhone / 1000)
             {
-                transform.Rotate(-Vector3.down, 25f * Time.deltaTime, Space.World);
+                transform.Rotate(-Vector3.down, _angleSpeedPhone * Time.deltaTime, Space.World);
             }
 
             if (Vector3.Distance(transform.position, _phoneMarker.position) <= _cameraThresholdDistance && !_clickAndReactScript.IntroDialogue[_clickAndReactScript.IndexSet].activeSelf)
@@ -102,7 +105,7 @@ public class CameraZoom : MonoBehaviour
             transform.position = Vector3.Lerp(transform.position, _coffeeMarker.position, _speedCamera * Time.deltaTime);
             if (transform.rotation.y > _clampCoffee/1000)
             {
-                transform.Rotate(Vector3.down, 25f * Time.deltaTime, Space.World);
+                transform.Rotate(Vector3.down, _angleSpeedCoffee * Time.deltaTime, Space.World);
                 _podMoves = true;
             }
         }
@@ -111,12 +114,12 @@ public class CameraZoom : MonoBehaviour
         {
             if (transform.rotation.y < 0)
             {
-                transform.Rotate(-Vector3.down, 60f * Time.deltaTime, Space.World);
+                transform.Rotate(-Vector3.down, _angleSpeedBack * Time.deltaTime, Space.World);
             }
 
             if (transform.rotation.y > 0)
             {
-                transform.Rotate(Vector3.down, 60f * Time.deltaTime, Space.World);
+                transform.Rotate(Vector3.down, _angleSpeedBack * Time.deltaTime, Space.World);
             }
             transform.position = Vector3.Lerp(transform.position, _cameraBase.position, _speedCamera * Time.deltaTime);
             _popIt = false;
