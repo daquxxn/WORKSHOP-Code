@@ -23,6 +23,8 @@ public class CameraZoom : MonoBehaviour
 
     [SerializeField] private GameObject _canvasIcone = null;
 
+    [SerializeField] private float _speedCamera = 2f;
+
     private bool _coffeeGameIsOn = false;
 
     public bool CoffeeGameIsOn 
@@ -63,7 +65,7 @@ public class CameraZoom : MonoBehaviour
     {
         if (_clickAndReactScript.ComputerOn == true)
         {
-            transform.position = Vector3.Lerp(transform.position, _computerMarker.position, Time.deltaTime);
+            transform.position = Vector3.Lerp(transform.position, _computerMarker.position, _speedCamera * Time.deltaTime);
 
             if (Vector3.Distance(transform.position, _computerMarker.position) <= _cameraThresholdDistance && !_clickAndReactScript.ComputerScreen.activeSelf)
             //&& s'il n'est pas déjà affiché
@@ -79,7 +81,7 @@ public class CameraZoom : MonoBehaviour
 
         if (_clickAndReactScript.PhoneGameOn == true)
         {
-            transform.position = Vector3.Lerp(transform.position, _phoneMarker.position, Time.deltaTime);
+            transform.position = Vector3.Lerp(transform.position, _phoneMarker.position, _speedCamera * Time.deltaTime);
             if (transform.rotation.y < _clampPhone / 1000)
             {
                 transform.Rotate(-Vector3.down, 25f * Time.deltaTime, Space.World);
@@ -97,7 +99,7 @@ public class CameraZoom : MonoBehaviour
         if (_clickAndReactScript.CoffeeGameOn == true)
         {
             _coffeeGameIsOn = true;
-            transform.position = Vector3.Lerp(transform.position, _coffeeMarker.position, Time.deltaTime);
+            transform.position = Vector3.Lerp(transform.position, _coffeeMarker.position, _speedCamera * Time.deltaTime);
             if (transform.rotation.y > _clampCoffee/1000)
             {
                 transform.Rotate(Vector3.down, 25f * Time.deltaTime, Space.World);
@@ -116,7 +118,7 @@ public class CameraZoom : MonoBehaviour
             {
                 transform.Rotate(Vector3.down, 60f * Time.deltaTime, Space.World);
             }
-            transform.position = Vector3.Lerp(transform.position, _cameraBase.position, Time.deltaTime);
+            transform.position = Vector3.Lerp(transform.position, _cameraBase.position, _speedCamera * Time.deltaTime);
             _popIt = false;
 
             if (Vector3.Distance(transform.position, _cameraBase.position) <= _cameraThresholdDistanceForIcons)
